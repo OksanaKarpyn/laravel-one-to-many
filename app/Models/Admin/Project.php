@@ -14,5 +14,11 @@ class Project extends Model
         'content',
         'slug',
         'image',
+        'category_id'
     ];
+    // 1 post hanno una sola categoria
+    public function category(){
+        //belongsTo->questo dice collegamento con uno solo post
+        return $this::belongsTo(Category::class);
+    }
 }

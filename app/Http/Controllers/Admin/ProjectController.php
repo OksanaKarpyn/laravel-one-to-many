@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Admin\Project;
+use App\Models\Admin\Category;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
@@ -31,7 +32,8 @@ class ProjectController extends Controller
     public function create()
     {
         //
-        return view ('Admin.posts.create');
+        $new_categories = Category::all();
+        return view ('Admin.posts.create',compact('new_categories'));
         
     }
 
@@ -97,8 +99,9 @@ class ProjectController extends Controller
     public function edit($id)
     {
         //
+        $new_categories = Category::all();
         $mod_post =  Project::find($id);
-        return view('Admin.posts.edit',compact('mod_post'));
+        return view('Admin.posts.edit',compact('mod_post','new_categories'));
     }
 
     /**
@@ -119,17 +122,18 @@ class ProjectController extends Controller
         $form_data = $request->validated();
 
          $form_data = $request->all();
+         $mod_post = Project::find($id);
          if( $request ->hasFile('image')){
             
-            if( $request->image) {
-                Storage::delete($request->image);
+            if( $mod_post->image) {
+                Storage::delete( $mod_post->image);
                  }
             //public folder esiste ,post_image,cartella che creo 
             $path = Storage::disk('public')->put('post_images', $request->image);
             $form_data['image'] = $path;
         };
          
-        $mod_post = Project::find($id);
+        
         $mod_post->update($form_data);
        
         return redirect()->route('admin.posts.index');

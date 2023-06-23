@@ -15,7 +15,9 @@
                   <h6 class="card-subtitle mb-2 text-body-secondary">{{$elem['type']}}</h6>
                   <p class="card-text">{{$elem['content']}}</p>
                   <p class="card-text">{{$elem['price']}}</p>
-        
+                  @if($elem->category)
+                  <div>{{$elem->category->title}}</div>
+                  @endif
                   <a href="#" class="card-link">Card link</a>
                   <a href="#" class="card-link">Another link</a>
                 </div>

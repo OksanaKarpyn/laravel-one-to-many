@@ -28,6 +28,18 @@
         <label for="input-image" class="form-label">Image</label>
         <input type="file" id="input-image" name="image" class="form-control">
     </div>
+    <div class=" form-group mb-3">
+        <label for="input-category" class="form-label">category</label>
+        <select class="form-select form-select-lg" name="category_id" @error('category_id') is-invalid @enderror id="input-category">
+            <option value="">....Select one.....</option>
+            @foreach($new_categories as $elem)
+            <option value="{{$elem->id}}"{{old('category_id', $mod_post->category_id) == $elem->id ? 'selected' : ''}}>{{$elem['title']}}</option>
+           @endforeach
+        </select>
+        @error('category_id')
+        <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+    </div>
     <button type="submit" class="btn btn-primary btn-outline-light my-4 col-2 mx-auto text-uppercase"><strong> create </strong></button>
 </form>
 </div>
